@@ -1,0 +1,54 @@
+#* ************************************************************************** *#
+#*                                                                            *#
+#*                                                        :::      ::::::::   *#
+#*   ft_server                                           :+:      :+:    :+:  *#
+#*                                                    +:+ +:+         +:+     *#
+#*   By: tsaiyan <tsaiyan@42.fr>                    +#+  +:+       +#+        *#
+#*                                                +#+#+#+#+#+   +#+           *#
+#*   Created: 2020/10/31 14:37:58 by tsaiyan           #+#    #+#             *#
+#*   Updated: 2020/10/31 14:38:00 by tsaiyan          ###   ########.fr       *#
+#*                                                                            *#
+#* ************************************************************************** *#
+
+# Default MEDOVAR server
+
+server {
+        listen 80;
+        listen [::]:80;
+	rewrite ^ https://localhost$request_uri? permanent; 
+}
+server {
+        # SSL configuration
+        listen 443 ssl;
+        listen [::]:443 ssl;
+	ssl on;
+	autoindex on;
+	ssl_certificate /etc/ssl/localhost.crt;
+	ssl_certificate_key /etc/ssl/localhost.key;
+        
+
+        root /var/www/html;
+
+        # php added
+        index index.php index.html index.htm;
+
+        server_name localhost;
+
+        location / {
+                # First attempt to serve request as file, then
+              # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+
+        # pass PHP scripts to FastCGI server
+        #
+        location ~ \.php$ {
+               include snippets/fastcgi-php.conf;
+        #
+        #       # With php-fpm (or other unix sockets):
+               fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+
+        }
+
+}
+
