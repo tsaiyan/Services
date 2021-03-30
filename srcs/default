@@ -15,19 +15,20 @@
 server {
         listen 80;
         listen [::]:80;
-	rewrite ^ https://localhost$request_uri? permanent; 
+	server_name localhost;
+	return 301 https://$host$request_uri;
 }
+
 server {
         # SSL configuration
-        listen 443 ssl;
-        listen [::]:443 ssl;
-	ssl on;
 	autoindex on;
-	ssl_certificate /etc/ssl/localhost.crt;
-	ssl_certificate_key /etc/ssl/localhost.key;
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	ssl_certificate localhost.crt;
+	ssl_certificate_key localhost.key;
         
 
-        root /var/www/html;
+        root /var/www/localhost;
 
         # php added
         index index.php index.html index.htm;
@@ -40,15 +41,6 @@ server {
                 try_files $uri $uri/ =404;
         }
 
-        # pass PHP scripts to FastCGI server
-        #
-        location ~ \.php$ {
-               include snippets/fastcgi-php.conf;
-        #
-        #       # With php-fpm (or other unix sockets):
-               fastcgi_pass unix:/run/php/php7.3-fpm.sock;
-
-        }
 
 }
 

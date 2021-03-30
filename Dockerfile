@@ -10,17 +10,15 @@
 #*                                                                            *#
 #* ************************************************************************** *#
 
-FROM alpine:latest
+FROM alpine:3.13
 
 RUN apk update && apk upgrade
-RUN apk add nginx
 
-COPY /srcs/default /etc/nginx/conf.d/default.conf
-COPY /srcs/init.sh /
-
-RUN openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=medovar'
-RUN chmod +x /init.sh
 RUN mkdir -p /run/nginx
-EXPOSE 80 443
+RUN apk add nginx openssl
+COPY /srcs/init.sh .
+COPY /srcs/default /etc/nginx/conf.d/default.conf
+RUN openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=medovar'
+CMD sh init.sh
 
-ENTRYPOINT ["nginx -g 'daemon off;'"]
+EXPOSE 80 443
