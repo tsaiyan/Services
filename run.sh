@@ -1,6 +1,8 @@
 RED= `tput setaf 2`
 NC='\033[0m'
 
+minikube stop
+minikube delete
 VBoxManage hostonlyif remove vboxnet0
 minikube start --vm-driver=virtualbox --cpus=4 --memory=4G --disk-size=50G
 eval $(minikube docker-env)
@@ -14,7 +16,7 @@ kubectl delete --all pods
 #minikube start --vm-driver=docker
 docker rm nginx_image .
 echo "DOCKER BUILD"
-docker build -t nginx_image
+docker build -t nginx_image .
 #kubectl delete --all pods
 kubectl apply -f nginx.yaml
 kubectl apply -f metallb.yaml
