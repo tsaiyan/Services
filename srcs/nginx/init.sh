@@ -13,4 +13,6 @@
 #!/bin/sh
 mv localhost.crt /etc/nginx/
 mv localhost.key /etc/nginx/
-nginx -g 'daemon off;'
+
+ssh-keygen -A
+/usr/bin/supervisord -c /etc/supervisor.conf

@@ -14,12 +14,12 @@ kubectl delete --all pods
 #minikube delete
 #echo "MINICUBE START"
 #minikube start --vm-driver=docker
-docker rm nginx_image .
+docker rm nginx_image
 echo "DOCKER BUILD"
-docker build -t nginx_image .
+docker build -t nginx_image ./srcs/nginx/
 #kubectl delete --all pods
-kubectl apply -f nginx.yaml
-kubectl apply -f metallb.yaml
+kubectl apply -f srcs/nginx/nginx.yaml
+kubectl apply -f srcs/nginx/ConfigMap.yaml
 minikube addons list
 kubectl get pods
 minikube dashboard
