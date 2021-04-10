@@ -11,6 +11,5 @@
 #* ************************************************************************** *#
 
 #!/bin/sh
-nginx
-php-fpm7
-sh
+
+/usr/bin/supervisord -c /etc/supervisor.conf
