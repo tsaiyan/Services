@@ -13,10 +13,12 @@ eval $(minikube docker-env)
 docker build -t php_image ./srcs/phpmyadmin/
 eval $(minikube docker-env)
 docker build -t nginx_image ./srcs/nginx/
+docker build -t wordpress_image ./srcs/wordpress/
 #kubectl delete --all pods
 kubectl apply -f srcs/configmap.yaml
 kubectl apply -f srcs/nginx/nginx.yaml
 kubectl apply -f srcs/phpmyadmin/phpmyadmin.yaml
+kubectl apply -f srcs/wordpress/wordpress.yaml
 minikube addons list
 kubectl get pods
 minikube dashboard
