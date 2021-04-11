@@ -14,28 +14,23 @@ FROM alpine:3.12
 
 RUN apk update && apk upgrade
 
-#NGINX INSTALL
-RUN mkdir -p /run/nginx
-RUN apk add nginx supervisor
-COPY default /etc/nginx/conf.d/default.conf
+#INSTALLS
+RUN apk add sudo vim mysql mysql-client supervisor \
+    openrc mariadb mariadb-common mariadb-client
 
-#OTHER DOWNLOADS
-RUN apk add wget
 COPY supervisor.conf /etc/
 
-#PHP INSTALLS
-RUN apk add php7 php7-fpm php7-cgi fcgi php7-mysqli php7-mbstring php7-json php7-session 
-#SHIT FOR WP
-RUN apk add lighttpd php7-common php7-session php7-iconv php7-json php7-gd php7-curl php7-xml php7-mysqli php7-imap php7-cgi fcgi php7-pdo php7-pdo_mysql php7-soap php7-xmlrpc php7-posix php7-mcrypt php7-gettext php7-ldap php7-ctype php7-dom 
-
-#WORDPRESS INSTALLS
-RUN wget http://wordpress.org/latest.tar.gz
-RUN tar zxvf latest.tar.gz && rm latest.tar.gz
-
-
-#PORTS
-EXPOSE 5050
+#MYSQL INSTALLS
+RUN mkdir -p /run/mysqld/
 
 #RUN INIT
 COPY init.sh .
+
+#CNF MYSQL
+COPY my.cnf /etc/
+
+
+#PORTS
+EXPOSE 3306
+
 CMD sh init.sh
