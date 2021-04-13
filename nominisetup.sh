@@ -10,13 +10,14 @@ echo "${RED}\nLET GO RUN SERVICES \n\n${NC}"
 #minikube start --vm-driver=docker
 echo "DOCKER BUILD"
 eval $(minikube docker-env)
-docker build -t php_image ./srcs/phpmyadmin/
-eval $(minikube docker-env)
 docker build -t nginx_image ./srcs/nginx/
+docker build -t php_image ./srcs/phpmyadmin/
 docker build -t wordpress_image ./srcs/wordpress/
+docker build -t mysql_image ./srcs/mysql/
 #kubectl delete --all pods
 kubectl apply -f srcs/configmap.yaml
 kubectl apply -f srcs/nginx/nginx.yaml
+kubectl apply -f srcs/mysql/mysql.yaml
 kubectl apply -f srcs/phpmyadmin/phpmyadmin.yaml
 kubectl apply -f srcs/wordpress/wordpress.yaml
 minikube addons list
