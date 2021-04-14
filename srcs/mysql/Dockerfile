@@ -18,9 +18,8 @@ RUN apk update && apk upgrade
 RUN apk add sudo vim mysql mysql-client supervisor \
     openrc mariadb mariadb-common mariadb-client
 
-COPY supervisor.conf /etc/
-
-#MYSQL INSTALLS
+COPY supervisor.conf /etc/supervisord.conf
+COPY init.sh ./
 RUN mkdir -p /run/mysqld/
 
 #RUN INIT
@@ -28,7 +27,9 @@ COPY init.sh .
 
 #CNF MYSQL
 COPY my.cnf /etc/
-
+COPY wordpress.sql /
+RUN chmod 777 /var/lib/mysql/
+RUN chmod +x init.sh
 
 #PORTS
 EXPOSE 3306

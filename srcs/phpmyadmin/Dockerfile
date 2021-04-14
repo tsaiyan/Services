@@ -24,11 +24,11 @@ COPY default /etc/nginx/conf.d/default.conf
 COPY supervisor.conf /etc/
 
 #PHP && PHPMYADMIN INSTALLS
-RUN apk add wget php7 php7-fpm php7-cgi fcgi php7-mysqli php7-mbstring php7-json php7-session 
+RUN apk add vim wget php7 php7-fpm php7-cgi fcgi php7-mysqli php7-mbstring php7-json php7-session 
 RUN wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.4-all-languages.tar.gz
 RUN tar zxvf phpMyAdmin-5.0.4-all-languages.tar.gz && rm phpMyAdmin-5.0.4-all-languages.tar.gz
 RUN mv phpMyAdmin-5.0.4-all-languages phpmyadmin
-
+COPY config.inc.php /phpmyadmin/
 #PORTS
 EXPOSE 5000
 

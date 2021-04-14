@@ -22,7 +22,7 @@ COPY default /etc/nginx/conf.d/default.conf
 #OTHER DOWNLOADS
 RUN apk add wget
 COPY supervisor.conf /etc/
-
+COPY wp-config.php /wordpress/
 #PHP INSTALLS
 RUN apk add php7 php7-fpm php7-cgi fcgi php7-mysqli php7-mbstring php7-json php7-session 
 #SHIT FOR WP
