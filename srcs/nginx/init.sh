@@ -15,4 +15,6 @@ mv localhost.crt /etc/nginx/
 mv localhost.key /etc/nginx/
 
 ssh-keygen -A
+nginx
+#sh
 /usr/bin/supervisord -c /etc/supervisor.conf
