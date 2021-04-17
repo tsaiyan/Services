@@ -12,5 +12,5 @@
 
 #!/bin/sh
 #sh
-/usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
-sh
+/usr/bin/supervisord -c /etc/supervisord.conf
+#sh

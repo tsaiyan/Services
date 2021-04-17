@@ -17,6 +17,10 @@ spec:
       name: twenty-one
       port: 21
       targetPort: 21
+    - protocol: TCP
+      name: passive
+      port: 2077
+      targetPort: 2077
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,4 +45,4 @@ spec:
           ports:
             - containerPort: 20
             - containerPort: 21
-            - containerPort: 20020
+            - containerPort: 2077
