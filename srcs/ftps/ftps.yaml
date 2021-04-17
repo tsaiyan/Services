@@ -10,11 +10,11 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      name: 20
+      name: twenty
       port: 20
       targetPort: 20
     - protocol: TCP
-      name: 21
+      name: twenty-one
       port: 21
       targetPort: 21
 ---
@@ -35,10 +35,10 @@ spec:
         app: ftps
     spec:
       containers:
-      - name: ftps
-        image: ftps_image
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 21
-        - containerPort: 20
-
+        - name: ftps
+          image: ftps_image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 20
+            - containerPort: 21
+            - containerPort: 20020

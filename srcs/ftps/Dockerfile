@@ -14,17 +14,28 @@ FROM alpine:3.12
 
 RUN apk update && apk upgrade
 
-COPY supervisor.conf /etc/
+# installs
 
-#INSTALLS
+RUN apk add vim wget openrc vsftpd vim openssl supervisor sudo
 
-RUN apk add vim wget openrc vsftpd vim openssl
-RUN openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=medovar' -newkey rsa:1024 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
+# ssl
+#RUN openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=medovar' -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt
+
+# copies
 COPY vsftpd.conf /etc/vsftpd/
-RUN adduser -D user && echo "user:pass" | chpasswd
-#PORTS
-EXPOSE 21 20
+COPY supervisor.conf /etc/supervisord.conf
 
-#INIT
+# add user
+RUN mkdir -p /etc/ftps/admin
+RUN adduser -D admin && echo "admin:password" | chpasswd
+
+# ssl
+
+RUN sudo mkdir -p /etc/ssl/private
+RUN openssl req -x509 -nodes -days 10 -subj "/C=RU/ST=Kazan/L=Kazan/O=21/OU=21School/CN=localhost" \
+    -newkey rsa:1024 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
+
+EXPOSE 21 20 2077
+
 COPY init.sh .
 CMD sh init.sh
