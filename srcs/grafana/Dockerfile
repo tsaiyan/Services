@@ -16,13 +16,14 @@ RUN apk update && apk upgrade
 
 # installs
 
-RUN apk add vim wget openrc supervisor sudo rpm
+RUN apk add vim wget openrc supervisor sudo
 
 # grafana
 RUN wget https://dl.grafana.com/enterprise/release/grafana-enterprise-7.5.4.linux-amd64.tar.gz
 RUN tar -zxvf grafana-enterprise-7.5.4.linux-amd64.tar.gz
 RUN mv grafana-7.5.4 grafana
 RUN rm grafana-enterprise-7.5.4.linux-amd64.tar.gz
+RUN ln -s grafana/bin/grafana-server ./grafana-server
 
 # glibc
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub

@@ -10,6 +10,25 @@
 #*                                                                            *#
 #* ************************************************************************** *#
 
-#!/bin/sh
-#sh
-./grafana-server -config "grafana/conf/defaults.ini" -homepath "/grafana"
+FROM alpine:3.12
+
+RUN apk update && apk upgrade
+
+# installs
+
+RUN apk add vim wget openrc supervisor sudo
+
+# influxdb install
+RUN apk add influxdb
+
+# volume
+VOLUME	["var/lib/influxdb"]
+
+# copies
+COPY supervisor.conf /etc/supervisord.conf
+#COPY influxdb.conf /etc/
+
+EXPOSE 8086
+
+COPY init.sh .
+CMD sh init.sh

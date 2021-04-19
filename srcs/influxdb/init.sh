@@ -11,5 +11,5 @@
 #* ************************************************************************** *#
 
 #!/bin/sh
-#sh
-./grafana-server -config "grafana/conf/defaults.ini" -homepath "/grafana"
+influxd -config /etc/influxdb.conf
+
