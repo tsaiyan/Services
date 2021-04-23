@@ -15,32 +15,29 @@
 server {
         listen 80;
         listen [::]:80;
-	server_name localhost;
 	return 301 https://$host$request_uri;
 }
 
 server {
-        # SSL configuration
+	# SSL configuration
 	listen 443 ssl;
 	listen [::]:443 ssl;
 	ssl_certificate localhost.crt;
 	ssl_certificate_key localhost.key;
         
 
-        root /var/www/localhost;
+	root /var/www/localhost;
 
-        # php added
-        index index.php index.html index.htm;
-
-        server_name localhost;
+	# php added
+	index index.php index.html index.htm;
 
 	location /wordpress {
-	return 307 http://192.168.99.104:5050/;
+		return 307 http://192.168.99.104:5050/;
 	}
     location ~ \/phpmyadmin {
         rewrite ^/phpmyadmin(/.*)$ $1 break;
-        proxy_set_header X-Forwarded-Proto  https;
-        proxy_pass                          http://$host:5000;
+        proxy_set_header X-Forwarded-Proto	https;
+        proxy_pass	http://$host:5000;
     }
     location ~ \/index.php {
         return 301   http://$host/phpmyadmin/;
