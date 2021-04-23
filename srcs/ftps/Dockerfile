@@ -17,10 +17,7 @@ FROM alpine:3.12
 RUN apk update && apk upgrade
 
 # installs
-RUN apk add vim wget openrc vsftpd vim openssl supervisor sudo
-
-# ssl
-#RUN openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=medovar' -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt
+RUN apk add wget vsftpd openssl
 
 # copies
 COPY vsftpd.conf /etc/vsftpd/

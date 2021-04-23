@@ -16,6 +16,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+    labels:
+      app: mysql
   name: influxdb-pvc
 spec:
   accessModes:
@@ -33,8 +35,6 @@ spec:
   selector:
     matchLabels:
       app: influxdb
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:

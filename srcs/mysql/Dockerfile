@@ -17,8 +17,7 @@ FROM alpine:3.12
 RUN apk update && apk upgrade
 
 # installs
-RUN apk add mysql mysql-client \
-    mariadb mariadb-common mariadb-client
+RUN apk add mysql mysql-client mariadb mariadb-common mariadb-client
 COPY init.sh ./
 RUN mkdir -p /run/mysqld/
 COPY my.cnf /etc/
