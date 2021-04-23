@@ -17,11 +17,10 @@ FROM alpine:3.12
 RUN apk update && apk upgrade
 
 # installs
-RUN apk add wget vsftpd openssl
+RUN apk add wget vsftpd openssl sudo
 
 # copies
 COPY vsftpd.conf /etc/vsftpd/
-COPY supervisor.conf /etc/supervisord.conf
 
 # add user
 RUN mkdir -p /etc/ftps/admin

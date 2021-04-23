@@ -42,5 +42,4 @@ echo "\033[36m\n***********ADDONS***********\n\033[0m"
 minikube addons list
 sleep 5
 echo "\033[36m\n***********PODS***********\n\033[0m"
-kubectl get pods
 minikube dashboard
