@@ -1,6 +1,6 @@
 echo "\033[36m\n***********MINIKUBE DELETING***********\n\033[0m"
-minikube stop
-minikube delete
+#minikube stop
+#minikube delete
 VBoxManage hostonlyif remove vboxnet0
 echo "\033[36m\n***********MINIKUBE STARTING***********\n\033[0m"
 minikube start --vm-driver=virtualbox --cpus=4 --memory=4G --disk-size=50G
@@ -43,5 +43,4 @@ minikube addons list
 sleep 5
 echo "\033[36m\n***********PODS***********\n\033[0m"
 kubectl get pods
-sleep 2
 minikube dashboard

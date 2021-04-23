@@ -7,10 +7,9 @@ metadata:
 spec:
   selector:
     app: mysql
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - protocol: TCP
-      name: mysql
       port: 3306
       targetPort: 3306
 ---
@@ -25,7 +24,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 100Mi
 ---
 apiVersion: apps/v1
 kind: Deployment

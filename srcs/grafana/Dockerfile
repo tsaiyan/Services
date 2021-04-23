@@ -1,22 +1,23 @@
 #* ************************************************************************** *#
 #*                                                                            *#
 #*                                                        :::      ::::::::   *#
-#*   ft_server                                           :+:      :+:    :+:  *#
+#*   ft_services                                         :+:      :+:    :+:  *#
 #*                                                    +:+ +:+         +:+     *#
 #*   By: tsaiyan <tsaiyan@42.fr>                    +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
-#*   Created: 2020/10/31 14:37:58 by tsaiyan           #+#    #+#             *#
-#*   Updated: 2020/10/31 14:38:00 by tsaiyan          ###   ########.fr       *#
+#*                                                     #+#    #+#             *#
+#*                                                    ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
+# os
 FROM alpine:3.12
 
+# update
 RUN apk update && apk upgrade
 
 # installs
-
-RUN apk add vim wget openrc supervisor sudo
+RUN apk add wget
 
 # grafana
 RUN wget https://dl.grafana.com/enterprise/release/grafana-enterprise-7.5.4.linux-amd64.tar.gz
@@ -30,13 +31,10 @@ COPY grafana.db /grafana/data/grafana.db
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.33-r0/glibc-2.33-r0.apk
 RUN apk add glibc-2.33-r0.apk
-#RUN rm glibc-2.33-r0.apk
+RUN rm glibc-2.33-r0.apk
 
-# copies
-COPY supervisor.conf /etc/supervisord.conf
-
-
+# ports
 EXPOSE 3000
 
-COPY init.sh .
+# start
 CMD ./grafana-server -config "grafana/conf/defaults.ini" -homepath "/grafana"

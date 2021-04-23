@@ -1,36 +1,36 @@
 #* ************************************************************************** *#
 #*                                                                            *#
 #*                                                        :::      ::::::::   *#
-#*   ft_server                                           :+:      :+:    :+:  *#
+#*   ft_services                                         :+:      :+:    :+:  *#
 #*                                                    +:+ +:+         +:+     *#
 #*   By: tsaiyan <tsaiyan@42.fr>                    +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
-#*   Created: 2020/10/31 14:37:58 by tsaiyan           #+#    #+#             *#
-#*   Updated: 2020/10/31 14:38:00 by tsaiyan          ###   ########.fr       *#
+#*                                                     #+#    #+#             *#
+#*                                                    ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
+# os
 FROM alpine:3.12
 
-#update
+# update
 RUN apk update && apk upgrade
 
-#installs
+# installs
 RUN mkdir -p /run/nginx
-RUN apk add nginx openssl supervisor
+RUN apk add nginx openssl
 
-#copies
-COPY init.sh .
+# copies
 COPY default /etc/nginx/conf.d/default.conf
 COPY zdarova.jpg /var/www/localhost
 COPY index.html /var/www/localhost
-COPY supervisor.conf /etc/
 
-#ssl
+# ssl
 RUN openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 -subj '/CN=medovar'
+RUN mv localhost.crt /etc/nginx/ && mv localhost.key /etc/nginx/
 
-#ports
+# ports
 EXPOSE 80 443
 
-#init
-CMD sh init.sh
+# start
+CMD nginx -g 'daemon off;'

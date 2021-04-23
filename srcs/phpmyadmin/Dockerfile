@@ -1,17 +1,19 @@
 #* ************************************************************************** *#
 #*                                                                            *#
 #*                                                        :::      ::::::::   *#
-#*   ft_server                                           :+:      :+:    :+:  *#
+#*   ft_services                                         :+:      :+:    :+:  *#
 #*                                                    +:+ +:+         +:+     *#
 #*   By: tsaiyan <tsaiyan@42.fr>                    +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
-#*   Created: 2020/10/31 14:37:58 by tsaiyan           #+#    #+#             *#
-#*   Updated: 2020/10/31 14:38:00 by tsaiyan          ###   ########.fr       *#
+#*                                                     #+#    #+#             *#
+#*                                                    ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
+# os
 FROM alpine:3.12
 
+# update
 RUN apk update && apk upgrade
 
 # installs
@@ -22,7 +24,7 @@ RUN apk add nginx supervisor wget
 COPY default /etc/nginx/conf.d/default.conf
 COPY supervisor.conf /etc/
 
-# PHP && PHPMYADMIN INSTALLS
+# php && pma installs
 RUN apk add php7 php7-fpm php7-cgi fcgi php7-mysqli php7-mbstring php7-json php7-session 
 RUN wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.4-all-languages.tar.gz
 RUN tar zxvf phpMyAdmin-5.0.4-all-languages.tar.gz && rm phpMyAdmin-5.0.4-all-languages.tar.gz
@@ -32,6 +34,5 @@ COPY config.inc.php /phpmyadmin/
 # ports
 EXPOSE 5000
 
-# init
-COPY init.sh .
+# start
 CMD /usr/bin/supervisord -c /etc/supervisor.conf
