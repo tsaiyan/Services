@@ -16,7 +16,6 @@ server {
 	listen 5000;
         listen [::]:5000;
         server_name localhost;
-
         root /phpmyadmin;
         index index.php;
 

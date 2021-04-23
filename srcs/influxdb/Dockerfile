@@ -35,9 +35,6 @@ RUN cp -r telegraf-1.17.3/* /
 RUN rm -rf telegraf-1.17.3
 RUN telegraf -sample-config --input-filter docker --output-filter influxdb > /etc/telegraf/telegraf.conf
 
-# volume
-VOLUME ["/var/lib/influxdb"]
-
 # ports
 EXPOSE 8086
 

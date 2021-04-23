@@ -18,7 +18,7 @@ RUN apk update && apk upgrade
 
 # installs
 RUN mkdir -p /run/nginx
-RUN apk add nginx supervisor wget
+RUN apk add nginx supervisor wget openssl
 
 # copies
 COPY default /etc/nginx/conf.d/default.conf

@@ -21,7 +21,6 @@ server {
 
 server {
         # SSL configuration
-	autoindex on;
 	listen 443 ssl;
 	listen [::]:443 ssl;
 	ssl_certificate localhost.crt;
@@ -34,19 +33,17 @@ server {
         index index.php index.html index.htm;
 
         server_name localhost;
+
 	location /wordpress {
 	return 307 http://192.168.99.104:5050/;
 	}
-	location /phpmyadmin {
-	return 307 http://192.168.99.104:5000/;
-	}
-
-        location / {
-                # First attempt to serve request as file, then
-              # as directory, then fall back to displaying a 404.
-                try_files $uri $uri/ =404;
-        }
-
-
+    location ~ \/phpmyadmin {
+        rewrite ^/phpmyadmin(/.*)$ $1 break;
+        proxy_set_header X-Forwarded-Proto  https;
+        proxy_pass                          http://$host:5000;
+    }
+    location ~ \/index.php {
+        return 301   http://$host/phpmyadmin/;
+    }
 }
 

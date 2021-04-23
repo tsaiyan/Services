@@ -38,8 +38,5 @@ kubectl apply -f srcs/grafana/grafana.yaml
 kubectl apply -f srcs/ftps/ftps.yaml
 kubectl apply -f srcs/influxdb/influxdb.yaml
 
-echo "\033[36m\n***********ADDONS***********\n\033[0m"
-minikube addons list
-sleep 5
-echo "\033[36m\n***********PODS***********\n\033[0m"
+echo "\033[36m\n***********FINISH***********\n\033[0m"
 minikube dashboard
