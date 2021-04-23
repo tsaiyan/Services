@@ -16,8 +16,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    labels:
-      app: mysql
+  labels:
+    app: influxdb
   name: influxdb-pvc
 spec:
   accessModes:
