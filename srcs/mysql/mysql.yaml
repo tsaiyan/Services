@@ -10,7 +10,7 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      name: 5k
+      name: mysql
       port: 3306
       targetPort: 3306
 ---

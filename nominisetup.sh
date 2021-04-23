@@ -1,9 +1,7 @@
-RED= `tput setaf 2`
-NC='\033[0m'
+
 
 minikube addons enable metrics-server
 minikube addons enable metallb
-echo "${RED}\nLET GO RUN SERVICES \n\n${NC}"
 #minikube stop
 #minikube delete
 #echo "MINICUBE START"
@@ -19,7 +17,6 @@ docker build -t mysql_image ./srcs/mysql/
 docker build -t ftps_image ./srcs/ftps/
 docker build -t grafana_image ./srcs/grafana/
 docker build -t influxdb_image ./srcs/influxdb/
-
 
 #yaml
 kubectl apply -f srcs/configmap.yaml

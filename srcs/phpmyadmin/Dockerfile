@@ -34,4 +34,4 @@ EXPOSE 5000
 
 # init
 COPY init.sh .
-CMD sh init.sh
+CMD /usr/bin/supervisord -c /etc/supervisor.conf

@@ -38,4 +38,4 @@ EXPOSE 5050
 
 #RUN INIT
 COPY init.sh .
-CMD sh init.sh
+CMD /usr/bin/supervisord -c /etc/supervisor.conf

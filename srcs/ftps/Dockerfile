@@ -38,4 +38,4 @@ RUN openssl req -x509 -nodes -days 10 -subj "/C=RU/ST=Kazan/L=Kazan/O=21/OU=21Sc
 EXPOSE 21 20 2077
 
 COPY init.sh .
-CMD sh init.sh
+CMD vsftpd /etc/vsftpd/vsftpd.conf

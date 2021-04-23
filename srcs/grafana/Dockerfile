@@ -24,6 +24,7 @@ RUN tar -zxvf grafana-enterprise-7.5.4.linux-amd64.tar.gz
 RUN mv grafana-7.5.4 grafana
 RUN rm grafana-enterprise-7.5.4.linux-amd64.tar.gz
 RUN ln -s grafana/bin/grafana-server ./grafana-server
+COPY grafana.db /grafana/data/grafana.db
 
 # glibc
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
@@ -38,4 +39,4 @@ COPY supervisor.conf /etc/supervisord.conf
 EXPOSE 3000
 
 COPY init.sh .
-CMD sh init.sh
+CMD ./grafana-server -config "grafana/conf/defaults.ini" -homepath "/grafana"
